@@ -37,12 +37,15 @@ class CelluleJeu: UICollectionViewCell {
         switch valeur {
         case let x where x >= 2 && x <= 16:
             texte.text = "\(x)";
+            texte.textColor = UIColor.white
             self.backgroundColor = UIColor.lightGray;
         case let x where x >= 32 && x <= 256:
             texte.text = "\(x)";
+            texte.textColor = UIColor.gray
             self.backgroundColor = UIColor.yellow;
         case let x where x >= 512 && x <= 2048:
             texte.text = "\(x)";
+            texte.textColor = UIColor.white
             self.backgroundColor = UIColor.brown;
         case let x where x > 2048 :
             texte.text = "\(x)";

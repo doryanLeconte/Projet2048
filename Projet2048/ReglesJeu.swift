@@ -25,13 +25,15 @@ class ReglesJeu {
         //        return (y != 0 && ((i == 0 && y > 0) || (i == nbLignes-1 && y < 0) || (i>0 && i<nbLignes-1))) || (x != 0 && ((j == 0 && x > 0) || (j == nbColones-1 && x < 0) || (j>0 && j<nbColones-1)))
     }
     
-    func mouvement(x: Int, y: Int, cellules:[[CelluleJeu?]]) {
+    func mouvement(x: Int, y: Int, cellules:[[CelluleJeu?]]) -> Bool {
+        var mouvementMade: Bool = false
         if x < 0 || y < 0{
             for i in 0...nbLignes-1 {
                 for j in 0...nbColones-1 {
                     var newI = i
                     var newJ = j
                     while isCellOnBoard(newI, newJ, y, x) && moveCell(cellule: cellules[newI][newJ], destination: cellules[newI+y][newJ+x])  {
+                        mouvementMade = true
                             newI += y
                             newJ += x
                         
@@ -45,6 +47,7 @@ class ReglesJeu {
                     var newI = i
                     var newJ = j
                     while isCellOnBoard(newI, newJ, y, x) && moveCell(cellule: cellules[newI][newJ], destination: cellules[newI+y][newJ+x])  {
+                        mouvementMade = true
                             newI += y
                             newJ += x
                         
@@ -58,6 +61,7 @@ class ReglesJeu {
                     var newI = i
                     var newJ = j
                     while isCellOnBoard(newI, newJ, y, x) && moveCell(cellule: cellules[newI][newJ], destination: cellules[newI+y][newJ+x])  {
+                        mouvementMade = true
                             newI += y
                             newJ += x
                         
@@ -65,6 +69,8 @@ class ReglesJeu {
                 }
             }
         }
+        
+        return mouvementMade
         
     }
     
@@ -90,6 +96,20 @@ class ReglesJeu {
             }
         }
         return score
+    }
+    
+    func generateNewCell(cellules:[[CelluleJeu?]]) {
+        var generated: Bool = false
+        let valeur_possible = [2, 4]
+        while !generated {
+            let randX = Int.random(in: 0...nbColones-1)
+            let randY = Int.random(in: 0...nbLignes-1)
+            
+            if (cellules[randX][randY]!.valeur == 0) {
+                generated = true
+                cellules[randX][randY]!.valeur = valeur_possible.randomElement()!
+            }
+        }
     }
     
 }

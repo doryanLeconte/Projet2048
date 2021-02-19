@@ -15,6 +15,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet
     var score: UILabel!;
     
+    @IBOutlet
+    var button: UIButton!;
+    
     var nbLignes: Int = 4;
     var nbColones: Int = 4;
     
@@ -109,25 +112,26 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @objc func mouvement(sender: UISwipeGestureRecognizer) {
         score.text = "Score : \(reglesJeu.getScore(cellules: cellules))"
+        var mouvementMade: Bool = false
         switch sender.direction {
         case UISwipeGestureRecognizer.Direction.right:
-            print("Droite")
-            reglesJeu.mouvement(x: 1, y: 0, cellules: cellules)
-            //print(cellules[3][3]?.valeur)
+            mouvementMade = reglesJeu.mouvement(x: 1, y: 0, cellules: cellules)
+            
         case UISwipeGestureRecognizer.Direction.left:
-            print("Gauche")
-            reglesJeu.mouvement(x: -1, y: 0, cellules: cellules)
+            mouvementMade = reglesJeu.mouvement(x: -1, y: 0, cellules: cellules)
             
         case UISwipeGestureRecognizer.Direction.up:
-            print("Haut")
-            reglesJeu.mouvement(x: 0, y: -1, cellules: cellules)
+            mouvementMade = reglesJeu.mouvement(x: 0, y: -1, cellules: cellules)
             
         case UISwipeGestureRecognizer.Direction.down:
-            print("Bas")
-            reglesJeu.mouvement(x: 0, y: 1, cellules: cellules)
+            mouvementMade = reglesJeu.mouvement(x: 0, y: 1, cellules: cellules)
             
         default:
             break
+        }
+        
+        if mouvementMade {
+            reglesJeu.generateNewCell(cellules: cellules)
         }
     }
 
@@ -135,10 +139,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
     @IBAction func rempli() {
-        cellules[0][0]!.valeur = 2
-        cellules[1][2]!.valeur = 4
-      
+        for i in 0...nbLignes-1 {
+            for j in 0...nbColones-1 {
+                cellules[i][j]!.valeur = 0
+            }
+        }
+        reglesJeu.generateNewCell(cellules: cellules)
         
+        button.setTitle("Recommencer", for: .normal)
        
     }
 
