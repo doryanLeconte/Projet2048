@@ -15,6 +15,8 @@
 		90FFCBFA25DCFACE009BBCA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90FFCBF825DCFACE009BBCA3 /* LaunchScreen.storyboard */; };
 		90FFCC0525DCFACF009BBCA3 /* Projet2048Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFCC0425DCFACF009BBCA3 /* Projet2048Tests.swift */; };
 		90FFCC1025DCFACF009BBCA3 /* Projet2048UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFCC0F25DCFACF009BBCA3 /* Projet2048UITests.swift */; };
+		90FFCC2125DCFDEB009BBCA3 /* CelluleJeu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFCC2025DCFDEB009BBCA3 /* CelluleJeu.swift */; };
+		90FFCC2925DD1CD8009BBCA3 /* ReglesJeu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFCC2825DD1CD8009BBCA3 /* ReglesJeu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		90FFCC0B25DCFACF009BBCA3 /* Projet2048UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Projet2048UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90FFCC0F25DCFACF009BBCA3 /* Projet2048UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projet2048UITests.swift; sourceTree = "<group>"; };
 		90FFCC1125DCFACF009BBCA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90FFCC2025DCFDEB009BBCA3 /* CelluleJeu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelluleJeu.swift; sourceTree = "<group>"; };
+		90FFCC2825DD1CD8009BBCA3 /* ReglesJeu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReglesJeu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				90FFCBF625DCFACE009BBCA3 /* Assets.xcassets */,
 				90FFCBF825DCFACE009BBCA3 /* LaunchScreen.storyboard */,
 				90FFCBFB25DCFACE009BBCA3 /* Info.plist */,
+				90FFCC2025DCFDEB009BBCA3 /* CelluleJeu.swift */,
+				90FFCC2825DD1CD8009BBCA3 /* ReglesJeu.swift */,
 			);
 			path = Projet2048;
 			sourceTree = "<group>";
@@ -259,7 +265,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				90FFCBF225DCFAA3009BBCA3 /* ViewController.swift in Sources */,
+				90FFCC2925DD1CD8009BBCA3 /* ReglesJeu.swift in Sources */,
 				90FFCBEE25DCFAA3009BBCA3 /* AppDelegate.swift in Sources */,
+				90FFCC2125DCFDEB009BBCA3 /* CelluleJeu.swift in Sources */,
 				90FFCBF025DCFAA3009BBCA3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,7 +444,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Projet2048/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -444,6 +453,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.imtld.Projet2048;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -454,7 +464,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Projet2048/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -462,6 +473,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.imtld.Projet2048;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
