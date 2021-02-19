@@ -12,6 +12,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet
     var cells: UICollectionView!;
     
+    @IBOutlet
+    var score: UILabel!;
+    
     var nbLignes: Int = 4;
     var nbColones: Int = 4;
     
@@ -105,6 +108,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     @objc func mouvement(sender: UISwipeGestureRecognizer) {
+        score.text = "Score : \(reglesJeu.getScore(cellules: cellules))"
         switch sender.direction {
         case UISwipeGestureRecognizer.Direction.right:
             print("Droite")

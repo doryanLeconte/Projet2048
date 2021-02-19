@@ -86,7 +86,7 @@ class ReglesJeu {
         var score = 0
         for i in 0...nbLignes-1 {
             for j in 0...nbColones-1 {
-                score += cellules[i][j]?.valeur
+                score += cellules[i][j]!.valeur
             }
         }
         return score
