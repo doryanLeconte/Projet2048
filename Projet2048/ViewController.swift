@@ -152,7 +152,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         } else if mouvementMade {
             
             reglesJeu.generateNewCell(cellules: cellules)
-            print(reglesJeu.isLost(cellules: cellules))
             if reglesJeu.isLost(cellules: cellules) {
                 let alert = UIAlertController(title: "Perdu !", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Recommencer", style: .default, handler: {
@@ -162,6 +161,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.rempli()
                     self.score.text = "Score : \(self.reglesJeu.getScore(cellules: self.cellules))"
                 }))
+                self.present(alert, animated: true)
             }
         }
     }

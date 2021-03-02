@@ -96,7 +96,6 @@ class ReglesJeu {
                 canMove = canMove || self.canMove(i, j, 0, 1, cellules)
             }
         }
-        print("in is lost : \(!canMove)")
         return !canMove
         
     }
