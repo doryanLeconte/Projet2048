@@ -27,9 +27,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var reglesJeu: ReglesJeu
     
+    var winDismissed: Bool = false;
+    
     required init?(coder aDecoder: NSCoder) {
         self.nbLignes = 4;
         self.nbColones = 4;
+        self.winDismissed = false;
         cellules = [[]];
         cellules = ([[CelluleJeu?]](repeating: [], count: self.nbLignes))
         for j in 1...self.nbLignes {
@@ -93,6 +96,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         cells.backgroundColor = UIColor.gray;
         
+        
         let detectionMouvementR: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.mouvement))
         detectionMouvementR.direction = .right
         view.addGestureRecognizer(detectionMouvementR)
@@ -111,7 +115,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     @objc func mouvement(sender: UISwipeGestureRecognizer) {
-        score.text = "Score : \(reglesJeu.getScore(cellules: cellules))"
+        
         var mouvementMade: Bool = false
         switch sender.direction {
         case UISwipeGestureRecognizer.Direction.right:
@@ -130,8 +134,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             break
         }
         
-        if mouvementMade {
+        score.text = "Score : \(reglesJeu.getScore(cellules: cellules))"
+        if reglesJeu.won && !winDismissed {
+            let alert = UIAlertController(title: "Victoire !", message: "Vous pouvez continuer ou recommencer", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Continuer", style: .default, handler: {
+                action in
+                self.winDismissed = true;
+            }))
+            alert.addAction(UIAlertAction(title: "Recommencer", style: .default, handler: {
+                action in
+                
+                self.reglesJeu.won = false;
+                self.rempli()
+                self.score.text = "Score : \(self.reglesJeu.getScore(cellules: self.cellules))"
+            }))
+            self.present(alert, animated: true)
+        } else if mouvementMade {
+            
             reglesJeu.generateNewCell(cellules: cellules)
+            print(reglesJeu.isLost(cellules: cellules))
+            if reglesJeu.isLost(cellules: cellules) {
+                let alert = UIAlertController(title: "Perdu !", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Recommencer", style: .default, handler: {
+                    action in
+
+                    self.reglesJeu.won = false;
+                    self.rempli()
+                    self.score.text = "Score : \(self.reglesJeu.getScore(cellules: self.cellules))"
+                }))
+            }
         }
     }
 
@@ -139,6 +170,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
     @IBAction func rempli() {
+        
         for i in 0...nbLignes-1 {
             for j in 0...nbColones-1 {
                 cellules[i][j]!.valeur = 0

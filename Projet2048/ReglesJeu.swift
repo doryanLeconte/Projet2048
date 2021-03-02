@@ -12,6 +12,7 @@ class ReglesJeu {
     var score: Int = 0
     var nbLignes: Int
     var nbColones: Int
+    var won: Bool = false
     
     required init?(coder aDecoder: NSCoder, nombreLigne: Int, nombreColones: Int) {
         self.nbLignes = nombreLigne;
@@ -22,7 +23,10 @@ class ReglesJeu {
         
         let isCellOnBoard = ((i+y) >= 0) && ((i + y) < nbLignes) && ((x + j) >= 0) && ((x + j) < nbColones)
         return isCellOnBoard
-        //        return (y != 0 && ((i == 0 && y > 0) || (i == nbLignes-1 && y < 0) || (i>0 && i<nbLignes-1))) || (x != 0 && ((j == 0 && x > 0) || (j == nbColones-1 && x < 0) || (j>0 && j<nbColones-1)))
+    }
+    
+    fileprivate func addCells(_ i: Int, _ j: Int, _ y: Int, _ x: Int, _ cellules: [[CelluleJeu?]]) -> Bool {
+        return isCellOnBoard(i, j, y, x) && moveCell(cellule: cellules[i][j], destination: cellules[i+y][j+x])
     }
     
     func mouvement(x: Int, y: Int, cellules:[[CelluleJeu?]]) -> Bool {
@@ -32,7 +36,7 @@ class ReglesJeu {
                 for j in 0...nbColones-1 {
                     var newI = i
                     var newJ = j
-                    while isCellOnBoard(newI, newJ, y, x) && moveCell(cellule: cellules[newI][newJ], destination: cellules[newI+y][newJ+x])  {
+                    while addCells(newI, newJ, y, x, cellules)  {
                         mouvementMade = true
                             newI += y
                             newJ += x
@@ -46,7 +50,7 @@ class ReglesJeu {
                 for j in 0...nbColones-1 {
                     var newI = i
                     var newJ = j
-                    while isCellOnBoard(newI, newJ, y, x) && moveCell(cellule: cellules[newI][newJ], destination: cellules[newI+y][newJ+x])  {
+                    while addCells(newI, newJ, y, x, cellules)   {
                         mouvementMade = true
                             newI += y
                             newJ += x
@@ -60,7 +64,7 @@ class ReglesJeu {
                 for j in stride(from: nbColones-1, to: -1, by: -1) {
                     var newI = i
                     var newJ = j
-                    while isCellOnBoard(newI, newJ, y, x) && moveCell(cellule: cellules[newI][newJ], destination: cellules[newI+y][newJ+x])  {
+                    while addCells(newI, newJ, y, x, cellules)   {
                         mouvementMade = true
                             newI += y
                             newJ += x
@@ -72,6 +76,33 @@ class ReglesJeu {
         
         return mouvementMade
         
+    }
+    
+    func isLost(cellules:[[CelluleJeu?]]) -> Bool {
+        var canMove: Bool = false
+        for i in 0...nbLignes-1 {
+            for j in 0...nbColones-1 {
+                canMove = canMove || self.canMove(i, j, 0, -1, cellules)
+                canMove = canMove || self.canMove(i, j, -1, 0, cellules)
+            }
+        }
+        for i in stride(from: nbLignes-1, to: -1, by: -1) {
+            for j in 0...nbColones-1 {
+                canMove = canMove || self.canMove(i, j, 1, 0, cellules)
+            }
+        }
+        for i in 0...nbLignes {
+            for j in stride(from: nbColones-1, to: -1, by: -1) {
+                canMove = canMove || self.canMove(i, j, 0, 1, cellules)
+            }
+        }
+        print("in is lost : \(!canMove)")
+        return !canMove
+        
+    }
+    
+    func canMove(_ i: Int, _ j: Int, _ y: Int, _ x: Int, _ cellules: [[CelluleJeu?]]) -> Bool {
+        return isCellOnBoard(i, j, y, x) && (cellules[i][j]!.valeur != 0 && (cellules[i+y][j+x]!.valeur == 0 || cellules[i+y][j+x]!.valeur == cellules[i][j]!.valeur))
     }
     
     
@@ -93,10 +124,15 @@ class ReglesJeu {
         for i in 0...nbLignes-1 {
             for j in 0...nbColones-1 {
                 score += cellules[i][j]!.valeur
+                if cellules[i][j]!.valeur == 2048 {
+                    self.won = true
+                }
             }
         }
         return score
     }
+    
+    
     
     func generateNewCell(cellules:[[CelluleJeu?]]) {
         var generated: Bool = false
